@@ -142,6 +142,7 @@ class French(Language):
     ZERO = {"zéro"}
     DECIMAL_SEP = "virgule"
     DECIMAL_SYM = ","
+    THOUSANDS_SYM = " "
 
     AND_NUMS = {"un", "une", "unième", "onze", "onzième"}
     AND = "et"

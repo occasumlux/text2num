@@ -215,7 +215,8 @@ class WordToDigitParser:
     """
 
     def __init__(
-        self, lang: Language, relaxed: bool = False, signed: bool = True
+        self, lang: Language, relaxed: bool = False, signed: bool = True, 
+        formatted: bool = False
     ) -> None:
         """Initialize the parser.
 
@@ -230,6 +231,7 @@ class WordToDigitParser:
         self.int_builder = WordStreamValueParser(lang, relaxed=relaxed)
         self.frac_builder = WordStreamValueParser(lang, relaxed=relaxed)
         self.signed = signed
+        self.formatted = formatted # For thousands separator
         self.in_frac = False
         self.closed = False  # For deferred stop
         self.open = False  # For efficiency
@@ -248,7 +250,8 @@ class WordToDigitParser:
             if self.in_frac and self.frac_builder.value:
                 self._value.append(str(self.frac_builder.value))
             elif not self.in_frac and self.int_builder.value:
-                self._value.append(str(self.int_builder.value))
+                to_append = f'{self.int_builder.value:_}'.replace('_', self.lang.THOUSANDS_SYM) if self.formatted else str(self.int_builder.value)
+                self._value.append(to_append)
             self.closed = True
 
     def at_start_of_seq(self) -> bool:
@@ -333,7 +336,8 @@ class WordToDigitParser:
             and (look_ahead in self.lang.NUMBERS or look_ahead in self.lang.ZERO)
             and not self.in_frac
         ):
-            self._value.append(str(self.int_builder.value))
+            to_append = f'{self.int_builder.value:_}'.replace('_', self.lang.THOUSANDS_SYM) if self.formatted else str(self.int_builder.value)
+            self._value.append(to_append)
             self._value.append(self.lang.DECIMAL_SYM)
             self.in_frac = True
         elif not self._push(word, look_ahead):

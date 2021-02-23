@@ -56,11 +56,11 @@ class TestTextToNumES(TestCase):
         long_text = "novecientos noventa y nueve mil novecientos noventa y nueve millones novecientos noventa y nueve mil novecientos noventa y nueve"
         self.assertEqual(text2num(long_text, "es"), 999999999999)
 
-        self.assertEqual(alpha2digit("uno coma uno", "es"), '1.1')
-        self.assertEqual(alpha2digit("uno coma cuatrocientos uno", "es"), '1.401')
+        self.assertEqual(alpha2digit("uno coma uno", "es"), '1,1')
+        self.assertEqual(alpha2digit("uno coma cuatrocientos uno", "es"), '1,401')
 
         # TODO:
-        # self.assertEqual(alpha2digit("cero coma cinco", "es"), '0.5')
+        # self.assertEqual(alpha2digit("cero coma cinco", "es"), '0,5')
 
         test1 = "cincuenta y tres mil veinte millones doscientos cuarenta y tres mil setecientos veinticuatro"
         self.assertEqual(text2num(test1, "es"), 53_020_243_724)
@@ -150,11 +150,11 @@ class TestTextToNumES(TestCase):
             "doce coma noventa y nueve, ciento veinte coma cero cinco,"
             " uno coma doscientos treinta y seis, uno coma dos tres seis."
         )
-        expected = "12.99, 120.05, 1.236, 1.2 3 6."
+        expected = "12,99, 120,05, 1,236, 1,2 3 6."
         self.assertEqual(alpha2digit(source, "es"), expected)
 
-        self.assertEqual(alpha2digit("coma quince", "es"), "0.15")
-        #self.assertEqual(alpha2digit("cero coma quince", "es"), "0.15") # TODO
+        self.assertEqual(alpha2digit("coma quince", "es"), "0,15")
+        #self.assertEqual(alpha2digit("cero coma quince", "es"), "0,15") # TODO
 
     def test_alpha2digit_signed(self):
         source = "Tenemos mas veinte grados dentro y menos quince fuera."
@@ -205,3 +205,8 @@ class TestTextToNumES(TestCase):
         expected = "Ellas han quedado 3ª"
         self.assertEqual(alpha2digit(source, "es"), expected)
     """
+
+    def test_alpha2digit_formatted(self):
+        source = "Son tres mil millones doscientos cuarenta y cuatro mil quinientos."
+        expected = "Son 3.000.244.500."
+        self.assertEqual(alpha2digit(source, "es", formatted=True), expected)

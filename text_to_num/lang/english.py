@@ -114,6 +114,7 @@ class English(Language):
     ZERO = {"zero", "o"}
     DECIMAL_SEP = "point"
     DECIMAL_SYM = "."
+    THOUSANDS_SYM = ","
 
     AND_NUMS: Set[str] = set()
     AND = "and"

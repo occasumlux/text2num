@@ -42,6 +42,7 @@ class Language:
     ZERO: Set[str]
     DECIMAL_SEP: str
     DECIMAL_SYM: str
+    THOUSANDS_SYM: str
 
     AND_NUMS: Set[str]
     AND: str

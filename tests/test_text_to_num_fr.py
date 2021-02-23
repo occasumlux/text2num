@@ -185,3 +185,8 @@ class TestTextToNumFR(TestCase):
     def test_un_pronoun(self):
         source = "Je n'en veux qu'un. J'annonce: le un"
         self.assertEqual(alpha2digit(source, "fr"), source)
+
+    def test_alpha2digit_formatted(self):
+        source = "C'est trois milliards deux cent quarante-quatre mille cinq cents."
+        expected = "C'est 3 000 244 500."
+        self.assertEqual(alpha2digit(source, "fr", formatted=True), expected)

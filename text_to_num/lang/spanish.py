@@ -112,7 +112,8 @@ class Spanish(Language):
     SIGN = {"mas": "+", "menos": "-"}
     ZERO = {"cero"}
     DECIMAL_SEP = "coma"
-    DECIMAL_SYM = "."
+    DECIMAL_SYM = "," # Changed from "."
+    THOUSANDS_SYM = "."
 
     AND_NUMS = {
         "un",

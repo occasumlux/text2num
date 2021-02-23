@@ -65,7 +65,8 @@ def text2num(text: str, lang: str, relaxed: bool = False) -> int:
 
 
 def alpha2digit(
-    text: str, lang: str, relaxed: bool = False, signed: bool = True
+    text: str, lang: str, relaxed: bool = False, signed: bool = True, 
+    use_lowercase: bool = True, formatted: bool = False
 ) -> str:
     """Return the text of ``text`` with all the French spelled numbers converted to digits.
     Takes care of punctuation.
@@ -81,16 +82,18 @@ def alpha2digit(
     out_segments: List[str] = []
     for segment, sep in zip(segments, punct):
         tokens = segment.split()
-        num_builder = WordToDigitParser(language, relaxed=relaxed, signed=signed)
+        num_builder = WordToDigitParser(language, relaxed=relaxed, signed=signed, formatted=formatted)
         in_number = False
         out_tokens: List[str] = []
         for word, ahead in look_ahead(tokens):
-            if num_builder.push(word.lower(), ahead and ahead.lower()):
+            word_to_push = word.lower() if use_lowercase else word
+            ahead_to_push = ahead and ahead.lower() if use_lowercase else ahead
+            if num_builder.push(word_to_push, ahead_to_push):
                 in_number = True
             elif in_number:
                 out_tokens.append(num_builder.value)
-                num_builder = WordToDigitParser(language, relaxed=relaxed, signed=signed)
-                in_number = num_builder.push(word.lower(), ahead and ahead.lower())
+                num_builder = WordToDigitParser(language, relaxed=relaxed, signed=signed, formatted=formatted)
+                in_number = num_builder.push(word_to_push, ahead_to_push)
             if not in_number:
                 out_tokens.append(word)
         # End of segment

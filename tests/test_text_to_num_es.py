@@ -210,3 +210,8 @@ class TestTextToNumES(TestCase):
         source = "Son tres mil millones doscientos cuarenta y cuatro mil quinientos."
         expected = "Son 3.000.244.500."
         self.assertEqual(alpha2digit(source, "es", formatted=True), expected)
+    
+    def test_alpha2digit_use_lowercase(self):
+        source = "dos Tres cuatro CINCO."
+        expected = "2 Tres 4 CINCO."
+        self.assertEqual(alpha2digit(source, "es", use_lowercase=False), expected)

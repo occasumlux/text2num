@@ -60,6 +60,11 @@ STENS: Dict[str, int] = {
         10,
     )
 }
+# Written accent cases
+STENS['dieciséis'] = 16
+STENS['veintidós'] = 22
+STENS['veintitrés'] = 23
+STENS['veintiséis'] = 26
 
 # Ten multiples
 # Ten multiples may be followed by a unit only;
@@ -109,7 +114,7 @@ class Spanish(Language):
     HUNDRED = HUNDRED
     NUMBERS = NUMBERS
 
-    SIGN = {"mas": "+", "menos": "-"}
+    SIGN = {"mas": "+", "más": "+", "menos": "-"} # Added 'más'
     ZERO = {"cero"}
     DECIMAL_SEP = "coma"
     DECIMAL_SYM = "," # Changed from "."
